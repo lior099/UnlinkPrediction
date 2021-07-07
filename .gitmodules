@@ -1,3 +1,6 @@
 [submodule "graph-measures"]
 	path = GraphMeasures
 	url = https://github.com/lior099/graph-measures.git
+[submodule "GraphSAINT"]
+	path = GraphSAINT
+	url = https://github.com/lior099/GraphSAINT.git
