@@ -3,4 +3,5 @@ __pycache__
 *.pkl
 Data/DBLP
 Data/IMDB
+GraphSAINT
 Results/task_line
