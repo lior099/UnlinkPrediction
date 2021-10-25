@@ -74,11 +74,11 @@ class LineTask(Task):
 
 
         if not graph_params.feats:
-            print("Didn't find any mx_line file for graph "+graph_params.name+'. Creating:')
+            print("Didn't find any features_{}.pkl file for graph "+graph_params.name+'. Creating:')
             create_feats_to_pkl(line_graph, graph_params)
         # for_testing(line_graph)
         graph_feats, feats_names = graph_params.get_feats(line=True)
-        # plot_features_histogram(graph_feats, self.results_dir, feats_names)
+        plot_features_histogram(graph_feats, self.results_dir, feats_names)
         gs_data_path = SEP.join([self.destination, "graph_saint_data", graph_params.name])
         convert(line_graph, gs_data_path, future_graph=line_future_graph, feats=graph_feats)
 

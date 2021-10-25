@@ -32,7 +32,7 @@ def plot_graph(data_paths, colors, x_label, y_label, save_path=None, my_labels=N
     plt.show()
     plt.clf()
 
-def plot_temp(data_paths, colors, x_label, y_label, save_path=None, my_labels=None, title=''):
+def plot_temp(data_paths, colors, x_label, y_label, save_path=None, my_labels=None, title='', y_range=None):
     x_list, y_list, labels = [], [], []
     for path in data_paths:
         with open(path, 'r', newline='') as file:
@@ -55,7 +55,9 @@ def plot_temp(data_paths, colors, x_label, y_label, save_path=None, my_labels=No
     # plt.grid(True, linestyle='--', which="both")
     plt.legend(bbox_to_anchor=(1.05, 1.0), loc='upper left')
     plt.tight_layout()
-    plt.ylim([0.5, 0.7])
+    if y_range is None:
+        y_range = [0.5, 0.7]
+    plt.ylim(y_range)
     if save_path is not None:
         plt.savefig(save_path)
     plt.show()
@@ -132,5 +134,7 @@ def plot_features_histogram(x, path, feats_names):
         plt.show()
 
 if __name__ == '__main__':
-    print(os.listdir(os.getcwd()))
-    plot_temp(['.\\Results\\task_line\\dblp\\task_line_dblp_scores0_8.csv'], ['blue'], 'Snapshot', 'AUC', save_path='.\\Results\\task_line\\dblp\\task_line_dblp_scores_bars.png', my_labels=['AUC'], title='AUC of DBLP snapshots')
+    # plot_temp(['.\\Results\\task_line\\dblp\\task_line_dblp_scores0_8.csv'], ['blue'], 'Snapshot', 'AUC', save_path='.\\Results\\task_line\\dblp\\task_line_dblp_scores_bars.png', my_labels=['AUC'], title='AUC of DBLP snapshots')
+    plot_temp(['.\\Results\\task_line\\Enron\\task_line_Enron_scores.csv'], ['blue'], 'Snapshot', 'AUC',
+              save_path='.\\Results\\task_line\\Enron\\task_line_Enron_scores_bars.png', my_labels=['AUC'],
+              title='AUC of Enron snapshots', y_range=[0.45, 0.8])

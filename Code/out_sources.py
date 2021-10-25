@@ -34,8 +34,8 @@ def create_feats_to_pkl(gnx, params):
 
 
     features_meta = {
-        "average_neighbor_degree": FeatureMeta(AverageNeighborDegreeCalculator, {"nd_avg"}),
         "general": FeatureMeta(GeneralCalculator, {"general"}),
+        "average_neighbor_degree": FeatureMeta(AverageNeighborDegreeCalculator, {"nd_avg"}),
         "louvain": FeatureMeta(LouvainCalculator, {"lov"}),
         "closeness_centrality": FeatureMeta(ClosenessCentralityCalculator, {"closeness"}),
         "load_centrality": FeatureMeta(LoadCentralityCalculator, {"load"})
@@ -52,9 +52,10 @@ def create_feats_to_pkl(gnx, params):
 
     # print(list(features_meta.keys()))
     # print(features.features)
-    sorted_features = map(at(1), sorted(features.items(), key=at(0)))
+    sorted_features = [at[1] for at in features.items()]
     sorted_features = [feature._print_name for feature in sorted_features if feature.is_relevant() and feature.is_loaded]
-    file_path = SEP.join([path, 'mx_line_{}.pkl'.format(params.id)])
+    # print(sorted_features)
+    file_path = SEP.join([path, 'features_{}.pkl'.format(params.id)])
     with open(file_path, 'wb') as file:
         pickle.dump((mx, sorted_features), file, protocol=pickle.HIGHEST_PROTOCOL)
     params.feats = file_path

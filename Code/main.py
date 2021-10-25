@@ -32,7 +32,7 @@ def get_params_from_pickles(dir, data_name):
             name = str(number) + '_' + data_name
             params = Params(name=name, id=number, path=SEP.join([dir, filename]), pkl=True)
             graphs_params[number] = params
-        elif 'mx_line' in filename and '.pkl' in filename:
+        elif 'features' in filename and '.pkl' in filename:
             graphs_feats[number] = SEP.join([dir, filename])
     graphs_params_list = []
     for number, params in graphs_params.items():
@@ -60,8 +60,9 @@ if __name__ == "__main__":
     if 'Code' not in os.listdir(os.getcwd()):
         raise Exception("Bad pathing, use the command os.chdir() to make sure you work on UnlinkPrediction directory")
     results_dir = "Results"
-    data_dir = SEP.join(["Data", "DBLP"])
-    data_name = 'dblp'
+    # DBLP, IMDB, Enron, Radoslaw
+    data_dir = SEP.join(["Data", "Radoslaw"])
+    data_name = 'radoslaw'
 
     # graphs_params = [Params(name='0_dblp', id=0, path='C:/Users/shifmal2/Downloads/for_lior/DBLP/graph_0.pkl', pkl=True),
     #                  Params(name='1000_10_random', id=1000, size=1000, rank=10),
@@ -76,3 +77,5 @@ if __name__ == "__main__":
     # plot_all_results()
 
     print()
+
+
