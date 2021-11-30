@@ -32,7 +32,7 @@ def plot_graph(data_paths, colors, x_label, y_label, save_path=None, my_labels=N
     plt.show()
     plt.clf()
 
-def plot_temp(data_paths, colors, x_label, y_label, save_path=None, my_labels=None, title='', y_range=None):
+def plot_temp(data_paths, colors, x_label, y_label, save_path=None, my_labels=None, title='', y_range=None, plot_type='bar'):
     x_list, y_list, labels = [], [], []
     for path in data_paths:
         with open(path, 'r', newline='') as file:
@@ -44,7 +44,11 @@ def plot_temp(data_paths, colors, x_label, y_label, save_path=None, my_labels=No
         labels = my_labels
     for x, y, color, label in zip(x_list, y_list, colors, labels):
         x, y = zip(*sorted(zip(x, y)))
-        plt.bar(x, y, color=color, label=label)
+        if plot_type == 'bar':
+            plt.bar(x, y, color=color, label=label)
+        else:
+            assert plot_type == 'line'
+            plt.plot(x, y, "-ok", color=color, label=label)
     plt.xlabel(x_label)
     plt.ylabel(y_label)
     # plt.xticks(np.arange(0.0, 0.6, 0.1))
@@ -133,8 +137,34 @@ def plot_features_histogram(x, path, feats_names):
         plt.savefig(path+'/'+name+'.png')
         plt.show()
 
+
+def plot_loss_and_auc(train_loss, train_auc, val_loss, val_auc, path, data, snapshot):
+    fig, axs = plt.subplots(2, 2)
+    plt.suptitle('Loss and AUC of '+data.title()+' snapshot ' + snapshot)
+    axs[0, 0].plot(train_loss)
+    axs[0, 0].grid(color="w")
+    axs[0, 0].set_facecolor('xkcd:light gray')
+    axs[0, 0].set_title("Train Loss")
+    axs[1, 0].plot(train_auc)
+    axs[1, 0].grid(color="w")
+    axs[1, 0].set_facecolor('xkcd:light gray')
+    axs[1, 0].set_title("Train AUC")
+    axs[1, 0].sharex(axs[0, 0])
+    axs[0, 1].grid(color="w")
+    axs[0, 1].set_facecolor('xkcd:light gray')
+    axs[0, 1].plot(val_loss)
+    axs[0, 1].set_title("Validation Loss")
+    axs[1, 1].plot(val_auc)
+    axs[1, 1].grid(color="w")
+    axs[1, 1].set_facecolor('xkcd:light gray')
+    axs[1, 1].set_title("Validation AUC")
+    fig.tight_layout()
+    plt.savefig(path)
+    plt.show()
+
 if __name__ == '__main__':
+    data = 'radoslaw'
     # plot_temp(['.\\Results\\task_line\\dblp\\task_line_dblp_scores0_8.csv'], ['blue'], 'Snapshot', 'AUC', save_path='.\\Results\\task_line\\dblp\\task_line_dblp_scores_bars.png', my_labels=['AUC'], title='AUC of DBLP snapshots')
-    plot_temp(['.\\Results\\task_line\\Enron\\task_line_Enron_scores.csv'], ['blue'], 'Snapshot', 'AUC',
-              save_path='.\\Results\\task_line\\Enron\\task_line_Enron_scores_bars.png', my_labels=['AUC'],
-              title='AUC of Enron snapshots', y_range=[0.45, 0.8])
+    plot_temp(['.\\Results\\task_line\\' + data + '\\task_line_' + data + '_scores.csv'], ['blue'], 'Snapshot', 'AUC',
+              save_path='.\\Results\\task_line\\' + data + '\\task_line_' + data + '_scores_bars.png', my_labels=['AUC'],
+              title='AUC of ' + data + ' snapshots', y_range=[0.45, 0.8], plot_type='line')
