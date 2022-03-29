@@ -4,3 +4,6 @@
 [submodule "GraphSAINT"]
 	path = GraphSAINT
 	url = https://github.com/lior099/GraphSAINT.git
+[submodule "FODGE"]
+	path = FODGE
+	url = https://github.com/lior099/FODGE
